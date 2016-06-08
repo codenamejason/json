@@ -6,9 +6,6 @@ Conversion happens inside the browser, in straight JavaScript. It may choke on l
 
 Please file all bugs [in the issue tracker](https://github.com/konklone/json/issues).
 
-Read more about the converter and why I built it: "[Making JSON as simple as a spreadsheet](http://sunlightfoundation.com/blog/2014/03/11/making-json-as-simple-as-a-spreadsheet/)".
-
-
 ## Public domain
 
 This project makes uses of certain externally licensed works, including (but not limited to) Bootstrap, Highlight.js, jQuery and jquery-csv. Any such works retain their original license, even if they have been subsequently modified by me.

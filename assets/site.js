@@ -2,29 +2,21 @@ Events = {
   permalink: function() {
     ga('send', 'event', 'permalink', 'created')
   },
-
   permalink_error: function(value) {
     ga('send', 'event', 'permalink', 'error', "" + value);
   },
-
   download: function(size) {
     ga('send', 'event', 'download', 'clicked', 'size', size);
   }
 
 }
-
 function getParam(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
-
-// adapted from csvkit's recursive JSON flattening mechanism:
-// https://github.com/onyxfish/csvkit/blob/61b9c208b7665c20e9a8e95ba6eee811d04705f0/csvkit/convert/js.py#L15-L34
-
 // depends on jquery and jquery-csv (for now)
-
 function parse_object(obj, path) {
     if (path == undefined)
         path = "";
@@ -39,21 +31,17 @@ function parse_object(obj, path) {
             var newD = parse_object(obj[i], path + i + "/");
             $.extend(d, newD);
         }
-
         return d;
     }
-
     else if (scalar) {
         var d = {};
         var endPath = path.substr(0, path.length-1);
         d[endPath] = obj;
         return d;
     }
-
     // ?
     else return {};
 }
-
 
 // otherwise, just find the first one
 function arrayFrom(json) {
@@ -63,7 +51,6 @@ function arrayFrom(json) {
 
             // but don't if it's just empty, or an array of scalars
             if (next.length > 0) {
-
               var type = $.type(next[0]);
               var scalar = (type == "number" || type == "string" || type == "boolean" || type == "null");
 
@@ -80,8 +67,6 @@ function arrayFrom(json) {
     return [json];
 }
 
-// adapted from Mattias Petter Johanssen:
-// https://www.quora.com/How-can-I-parse-unquoted-JSON-with-JavaScript/answer/Mattias-Petter-Johansson
 function quoteKeys(input) {
   return input.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": ');
 }
@@ -92,21 +77,16 @@ function removeTrailingComma(input) {
   else
     return input;
 }
-
-// Rudimentary, imperfect detection of JSON Lines (http://jsonlines.org):
-//
 // Is there a closing brace and an opening brace with only whitespace between?
 function isJSONLines(string) {
  return !!(string.match(/\}\s+\{/))
 }
-
 // To convert JSON Lines to JSON:
 // * Add a comma between spaced braces
 // * Surround with array brackets
 function linesToJSON(string) {
   return "[" + string.replace(/\}\s+\{/g, "}, {") + "]";
 }
-
 // todo: add graceful error handling
 function jsonFrom(input) {
   var string = $.trim(input);
